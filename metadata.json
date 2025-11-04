@@ -1,0 +1,5 @@
+{
+  "name": "HR Leave & Workforce Overview",
+  "description": "A comprehensive HR application for managing employee leave requests, approvals, and workforce planning. It features role-based dashboards for employees, managers, and HR, along with a detailed calendar view to monitor team availability and ensure minimum staffing levels are met.",
+  "requestFramePermissions": []
+}
