@@ -33,13 +33,22 @@ const LeaveInfoCell: React.FC<{
     );
 };
 
+interface LeaveTrackingPageProps {
+    apiFilter?: { department?: string };
+    title?: string;
+}
 
-const LeaveTrackingPage: React.FC = () => {
-    const { summaryData, isLoading, error } = useLeaveTrackingData();
+const LeaveTrackingPage: React.FC<LeaveTrackingPageProps> = ({ apiFilter, title }) => {
+    const { summaryData, isLoading, error } = useLeaveTrackingData(apiFilter);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'annualRemaining', direction: 'ascending' });
 
     const filteredData = useMemo(() => {
+        // Department filtering is now done by the API via apiFilter.
+        // We only need to filter by the search term on the client side.
+        if (!searchTerm) {
+            return summaryData;
+        }
         return summaryData.filter(employee =>
             employee.employeeName.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -87,7 +96,7 @@ const LeaveTrackingPage: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Employee Leave Tracking Report</h2>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100">{title || 'Employee Leave Tracking Report'}</h2>
             
             {/* Controls */}
             <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl sticky top-24 z-30 shadow-sm">
@@ -171,7 +180,7 @@ const LeaveTrackingPage: React.FC = () => {
                     <div className="text-center py-16">
                         <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">No Employees Found</h3>
                         <p className="text-gray-500 dark:text-gray-400 mt-2">
-                            No employees found matching your search term "{searchTerm}".
+                            No employees found matching your search criteria.
                         </p>
                     </div>
                 )}

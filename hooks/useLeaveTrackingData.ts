@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { EmployeeLeaveSummary } from '../types';
 import { N8N_MYLEAVE_WEBHOOK } from '../constants';
 
-const useLeaveTrackingData = () => {
+interface ApiFilter {
+  department?: string;
+}
+
+const useLeaveTrackingData = (apiFilter?: ApiFilter) => {
   const [summaryData, setSummaryData] = useState<EmployeeLeaveSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -11,7 +15,13 @@ const useLeaveTrackingData = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(N8N_MYLEAVE_WEBHOOK);
+      let url = N8N_MYLEAVE_WEBHOOK;
+      if (apiFilter?.department) {
+        // The API uses 'Department' with a capital D, based on the JSON response key.
+        url += `?Department=${encodeURIComponent(apiFilter.department)}`;
+      }
+      
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch leave data from the webhook.');
       }
@@ -44,7 +54,7 @@ const useLeaveTrackingData = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [apiFilter]);
 
   useEffect(() => {
     fetchAndProcessData();

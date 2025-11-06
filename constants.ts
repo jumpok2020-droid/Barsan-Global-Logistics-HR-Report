@@ -1,8 +1,10 @@
 import { Department, Employee, LeaveRequest, Holiday, UserRole, LeaveType, LeaveStatus, EmployeeStatus } from './types';
 
 export const N8N_LOGIN_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/HRBarsan-Login";
-export const N8N_MYLEAVE_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/MY-LEAVE";
-export const N8N_QUOTA_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/MY-LEAVE";
+export const N8N_RESETPASS_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/ResetPass";
+export const N8N_REGISTER_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/Register";
+export const N8N_MYLEAVE_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/MyLeave";
+export const N8N_QUOTA_WEBHOOK = "https://cherry99.app.n8n.cloud/webhook/MyLeave";
 export const WEBHOOK_TIMEOUT_MS = 10000;
 
 export const DEPARTMENTS: Department[] = [

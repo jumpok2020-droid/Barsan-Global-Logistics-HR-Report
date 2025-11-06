@@ -9,6 +9,7 @@ import LeaveRequestForm from '../components/LeaveRequestForm';
 import { OrgCoverageData } from '../services/leaveService';
 import PendingApprovalsList from '../components/PendingApprovalsList';
 import MyProfileView from './MyProfileView';
+import LeaveTrackingPage from './LeaveTrackingPage';
 
 interface ManagerDashboardProps {
   currentUser: Employee;
@@ -150,6 +151,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ currentUser, leaveD
             <nav className="-mb-px flex space-x-6" aria-label="Tabs">
                 <TabButton label="My Profile" isActive={activeTab === 'myProfile'} onClick={() => setActiveTab('myProfile')} />
                 <TabButton label="Manager Console" isActive={activeTab === 'console'} onClick={() => setActiveTab('console')} />
+                <TabButton label="Tracking Report" isActive={activeTab === 'tracking'} onClick={() => setActiveTab('tracking')} />
             </nav>
         </div>
 
@@ -194,6 +196,15 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ currentUser, leaveD
 
         {activeTab === 'myProfile' && (
           <MyProfileView currentUser={currentUser} leaveData={leaveData} />
+        )}
+        
+        {activeTab === 'tracking' && (
+            <div className="animate-fade-in">
+                <LeaveTrackingPage 
+                    apiFilter={{ department: department.name }}
+                    title="Department Leave Tracking Report"
+                />
+            </div>
         )}
 
       </div>
